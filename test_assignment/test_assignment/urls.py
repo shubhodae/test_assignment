@@ -27,9 +27,9 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='index'),
 
     # admin url
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
 
     # API urls
-    path('employees/', EmployeeView().as_view()),
-    path('employees/<int:emp_id>/', EmployeeDetailView().as_view()),
+    path('employees', EmployeeView().as_view()),
+    path('employees/<int:emp_id>', EmployeeDetailView().as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
