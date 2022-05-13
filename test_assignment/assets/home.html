@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+            <script>
+                var app = angular.module("employeeApp", ["ngRoute"]);
+
+                app.config(["$routeProvider", function($routeProvider) {
+                    $routeProvider
+                        .when("/", {
+                            templateUrl: "/static/page.html",
+                            controller: "employeeCtrl"
+                        })
+                }])
+
+                app.controller('employeeCtrl', function($scope, $http, $route) {
+                    $http.get("http://localhost:8000/employees/")
+                    .then(function(response) {
+                        $scope.employees = response.data;
+                    });
+
+                    $scope.create = function(employee) {
+                        // name = $scope.name;
+                        console.log(employee.name);
+                        $http({
+                            url: 'http://localhost:8000/employees/',
+                            method: "POST",
+                            data: {
+                                'name' : employee.name,
+                                'phone': '',
+                                'address': ''
+                            }
+                        })
+                        .then(function(response) {
+                            $route.reload();
+                        });
+
+                    };
+                });
+
+                app.controller('employeeDetailCtrl', function($scope, $http, $routeParams) {
+                    employeeId = $routeParams.employeeId;
+                    $http.get("http://localhost:8000/employees/" + employeeId + "/")
+                    .then(function(response) {
+                        $scope.employeeDetail = response.data;
+                    });
+                });
+            </script>
+    </head>
+
+    <body ng-app="employeeApp">
+        <div class="ng-view"></div>
+    </body>
+
+</html>

@@ -1,0 +1,10 @@
+<div>
+    <h1>Add employee</h1>
+        <!-- <textarea rows="5" ng-model="employee.name"></textarea> -->
+        <input type="text" ng-model="employee.name" />
+        <button type="submit" class="btn btn-success" ng-click="create(employee)">Send</button>
+    <h1>EMPLOYEES</h1>
+    <p ng-repeat="employee in employees">
+        <a href="#!/employee/{{employee.id}}">{{employee.name}}</a>
+    </p>
+</div>
